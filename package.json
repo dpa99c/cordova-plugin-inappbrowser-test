@@ -1,6 +1,6 @@
 {
     "name": "io.cordova.inappbrowser.test.uiwebview",
-    "displayName": "InAppBrowser Test",
+    "displayName": "UI InAppBrowser Test",
     "version": "1.0.0",
     "description": "",
     "author": "Dave Alden",

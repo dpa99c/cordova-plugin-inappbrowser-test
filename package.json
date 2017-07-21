@@ -1,6 +1,6 @@
 {
     "name": "io.cordova.inappbrowser.test.wkwebview",
-    "displayName": "InAppBrowser Test",
+    "displayName": "WK InAppBrowser Test",
     "version": "1.0.0",
     "description": "",
     "author": "Dave Alden",

@@ -1,5 +1,5 @@
 {
-    "name": "io.cordova.inappbrowser.test",
+    "name": "io.cordova.inappbrowser.test.wkwebview",
     "displayName": "InAppBrowser Test",
     "version": "1.0.0",
     "description": "",

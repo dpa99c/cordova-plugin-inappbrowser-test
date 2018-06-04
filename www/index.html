@@ -26,15 +26,33 @@
         #log{
             margin-top: 16px;
         }
+
+        .disabled *{
+            color: #ccc;
+        }
+
+        .usewkwebview{
+            margin-top: 32px;
+        }
+
+        .usewkwebview input{
+            transform: scale(2);
+            margin: 0 16px;
+        }
     </style>
 </head>
 
 <body>
     <h2>InappBrowser Test App</h2>
-    <button id="open" onclick="openIAB()">Open Test Page in IAB</button>
-
     <p>Platform: <span id="platform"></span></p>
-    <p>Webview: <span id="webview"></span></p>
+    <p>App Webview: <span id="webview"></span></p>
+
+    <button id="open" onclick="openIAB()">Open InappBrowser</button>
+
+    <div class="usewkwebview">
+        <label>Use WKWebView</label>
+        <input type="checkbox" />
+    </div>
 
     <div id="log"></div>
 </body>

@@ -5,8 +5,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Original Title</h1>
-        <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas non accumsan est. Aliquam vitae facilisis tortor. Donec hendrerit lectus sit amet turpis hendrerit, vel malesuada metus dapibus. In dui turpis, bibendum quis pretium at, pretium sit amet sapien. Sed nunc odio, venenatis sit amet libero id, gravida pharetra enim. Curabitur a magna vitae mauris sollicitudin euismod in sit amet libero. Aenean sed rutrum nunc, vitae porttitor est.</p>
+        <h1>InappBrowser Content</h1>
+
+        <p>Platform: <span id="platform"></span></p>
+        <p>InappBrowser Webview: <span id="webview"></span></p>
+
+        <script type="text/javascript">
+            function showPlatformDetails(){
+                var webView, platform;
+                if (navigator.userAgent.match(/(Android|Chrome)/)) {
+                    platform = "Android";
+                    if (navigator.userAgent.toLowerCase().indexOf('crosswalk') > -1) {
+                        webView = "Crosswalk";
+                    } else {
+                        webView = "System";
+                    }
+                } else if (navigator.userAgent.match(/(Apple)/)) {
+                    platform = "iOS";
+                    if (window.webkit && window.webkit.messageHandlers) {
+                        webView = "WKWebView";
+                    } else {
+                        webView = "UIWebView";
+                    }
+
+                }else{
+                    webView = platform = "Unknown";
+                }
+                document.getElementById('platform').innerHTML = platform;
+                document.getElementById('webview').innerHTML = webView;
+            }
+
+            function onReady(){
+                console.log("ready");
+                showPlatformDetails();
+            }
+
+            (function(){
+                document.addEventListener('DOMContentLoaded', onReady);
+            })();
+        </script>
+    </body>
     </body>
 </html>
 

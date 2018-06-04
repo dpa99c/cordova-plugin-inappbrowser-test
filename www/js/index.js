@@ -1,6 +1,7 @@
 var URL = "iab_content_page.html";
 
-var webView, iabOpts, osVersion, iab;
+var webView, iabOpts, osVersion, iab,
+    $useWKWebView, $useWKWebViewCheckbox;
 
 function log(msg){
     console.log(msg);
@@ -8,41 +9,36 @@ function log(msg){
 }
 
 function openIAB(){
-    iab = cordova.InAppBrowser.open(URL, '_blank', iabOpts);
+    var opts = iabOpts;
+    var logmsg = "Opening IAB";
+    if(device.platform === "iOS"){
+        if($useWKWebViewCheckbox.is(':checked')){
+            opts += ",usewkwebview=yes";
+            logmsg += " using WKWebView";
+        }else{
+            logmsg += " using UIWebView";
+        }
+    }
+
+    iab = cordova.InAppBrowser.open(URL, '_blank', opts);
 
     iab.addEventListener('loadstart', function(e) {
         log("received 'loadstart' for URL: "+ e.url);
     });
     iab.addEventListener('loadstop', function(e) {
         log("received 'loadstop' for URL: "+ e.url);
-        testInjection();
     });
     iab.addEventListener('loaderror', function(e) {
         log("received 'loaderror' for URL: "+ e.url);
     });
 }
 
-function testInjection(){
-    iab.executeScript({
-        code: "(function() { var body = document.querySelector('body'); var bottom = document.createElement('div'); bottom.innerHTML = 'Absolute Bottom'; bottom.classList.add('bottom');  body.appendChild(bottom); })(); document.getElementsByTagName('h1')[0].innerHTML = \" Injected Title\";"
-    }, function(returnValue){
-        returnValue = returnValue[0];
-       log("executeScript callback returned : " + returnValue);
-    });
-
-    iab.insertCSS({
-        code: "body *{color: red !important;}\
-                  .bottom { position: fixed; bottom: 0; z-index: 500; width: 100%; background: black; opacity: 0.5; padding: 10px; font-size: 20px;}"
-    }, function(){
-        log("insertCSS called back");
-    });
-}
-
-
 function onDeviceReady(){
     console.log("deviceready");
 
     osVersion = parseFloat(device.version);
+    $useWKWebView = $('.usewkwebview');
+    $useWKWebViewCheckbox = $('.usewkwebview input');
 
     if( device.platform === "iOS" ) {
         iabOpts = 'location=no,toolbar=yes';
@@ -58,6 +54,8 @@ function onDeviceReady(){
         } else {
             webView = "System" ;
         }
+        $useWKWebView.addClass('disabled');
+        $useWKWebViewCheckbox.attr('disabled', true);
     }
 
     $('#platform').html(device.platform + " " + device.version);

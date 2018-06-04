@@ -3,9 +3,14 @@ var URL = "iab_content_page.html";
 var webView, iabOpts, osVersion, iab,
     $useWKWebView, $useWKWebViewCheckbox;
 
-function log(msg){
+function log(msg, className){
+    className = className || '';
     console.log(msg);
-    $('#log').append("<p>"+msg+"</p>");
+    $('#log').append('<p class="'+className+'">'+msg+'</p>');
+}
+
+function error(msg){
+    log(msg, "error");
 }
 
 function openIAB(){
@@ -19,17 +24,19 @@ function openIAB(){
             logmsg += " using UIWebView";
         }
     }
+    log(logmsg);
 
     iab = cordova.InAppBrowser.open(URL, '_blank', opts);
 
     iab.addEventListener('loadstart', function(e) {
-        log("received 'loadstart' for URL: "+ e.url);
+        console.log("received 'loadstart':"+JSON.stringify(e));
     });
     iab.addEventListener('loadstop', function(e) {
-        log("received 'loadstop' for URL: "+ e.url);
+        console.log("received 'loadstop':"+JSON.stringify(e));
     });
     iab.addEventListener('loaderror', function(e) {
-        log("received 'loaderror' for URL: "+ e.url);
+        console.log("received 'loaderror':"+JSON.stringify(e));
+        error("loaderror: " + e.message);
     });
 }
 

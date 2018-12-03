@@ -10,6 +10,8 @@
         <p>Platform: <span id="platform"></span></p>
         <p>InappBrowser Webview: <span id="webview"></span></p>
 
+        <button onclick="onClickPostMessage()">Post Message</button>
+
         <script type="text/javascript">
             function showPlatformDetails(){
                 var webView, platform;
@@ -33,6 +35,17 @@
                 }
                 document.getElementById('platform').innerHTML = platform;
                 document.getElementById('webview').innerHTML = webView;
+            }
+
+            function onClickPostMessage(){
+                postMessage({
+                    action: "logout"
+                });
+            }
+
+            function postMessage(message){
+                if(!webkit.messageHandlers.cordova_iab) throw "Cordova IAB postMessage API not found!";
+                webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
             }
 
             function onReady(){

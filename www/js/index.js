@@ -38,6 +38,9 @@ function openIAB(){
         console.log("received 'loaderror':"+JSON.stringify(e));
         error("loaderror: " + e.message);
     });
+    iab.addEventListener('message', function(e) {
+        log("Message received: " + JSON.stringify(e));
+    });
 }
 
 function onDeviceReady(){

@@ -1,0 +1,42 @@
+body{
+    margin: 0;
+    background-color: #b0fffd;
+    text-align: center;
+}
+
+body.ios{
+    margin-top: 20px;
+}
+
+button#open{
+    padding: 16px;
+}
+
+#log{
+    margin-top: 16px;
+    overflow-wrap: break-word;
+}
+
+#log .error{
+    color: red;
+}
+
+.disabled *{
+    color: #ccc;
+}
+
+.usewkwebview{
+    margin-top: 32px;
+}
+
+.usewkwebview input{
+    transform: scale(2);
+    margin: 0 16px;
+}
+
+body.hidden #open,
+body:not(.hidden) #show,
+body:not(.ios) .ios-only,
+body:not(.android) .android-only{
+    display: none;
+}

@@ -100,15 +100,15 @@ function getIabOpts(){
     if (device.platform === "iOS") {
         iabOpts = 'location=no,toolbar=yes';
         targetWebview = $('input[name=webview]:checked').val();
-        if($('#beforeload').val()){
-            iabOpts += ',beforeload='+$('#beforeload').val();
-        }
         if(targetWebview === "wkwebview"){
             iabOpts += ',usewkwebview=yes';
         }
 
     } else {
         iabOpts = 'location=yes';
+    }
+    if($('#beforeload').val()){
+        iabOpts += ',beforeload='+$('#beforeload').val();
     }
     return iabOpts;
 }

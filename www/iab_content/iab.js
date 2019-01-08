@@ -7,6 +7,10 @@ function showPlatformDetails(){
         } else {
             webView = "System";
         }
+        var androidVersionMatch = navigator.userAgent.match(/Android \d\.\d/);
+        if(androidVersionMatch){
+            platform = androidVersionMatch[0];
+        }
     } else if (navigator.userAgent.match(/(Apple)/)) {
         platform = "iOS";
         if (window.webkit && window.webkit.messageHandlers) {

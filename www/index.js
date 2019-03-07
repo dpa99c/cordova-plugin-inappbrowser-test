@@ -55,11 +55,23 @@ function openIAB(){
 }
 
 function openCamera() {
+    var animationDelay = 500; // delay to wait for camera window animation
     navigator.camera.getPicture(function(){
         log("successfully opened camera");
+        if (device.platform === "iOS"){
+            // unhide IAB
+            iab.show();
+        }
     }, function(cameraError){
         error("error opening camera: "+cameraError);
+        if (device.platform === "iOS"){
+            iab.show();
+        }
     });
+    if (device.platform === "iOS"){
+        // hide IAB so camera window is in view
+        setTimeout(iab.hide, animationDelay);
+    }
 }
 
 

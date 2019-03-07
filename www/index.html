@@ -13,7 +13,6 @@
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
-    <script type="text/javascript" src="iab_content/common.js"></script>
 
 
 </head>
@@ -28,29 +27,6 @@
 
     <div class="section">
         <button id="open" class="pad-bottom" onclick="openIAB()">Open InappBrowser</button>
-        <button id="show" class="pad-bottom" onclick="showIAB()">Show IAB</button>
-
-        <div id="hideonopen" class="pad-bottom">
-            <label>Hide on open</label>
-            <input type="checkbox" />
-        </div>
-
-
-
-        <div class="pad-bottom">
-            <label>Use beforeload:</label>
-            <select id="beforeload">
-                <option value="" selected="selected">No</option>
-                <option value="yes">Yes</option>
-                <option value="get">GET</option>
-                <option value="post">POST</option>
-            </select>
-        </div>
-
-        <div class="pad-bottom">
-            <label>Abort on beforeload:</label>
-            <input type="checkbox" id="abort-on-beforeload" />
-        </div>
 
         <div class="ios-implementation ios-only">
             <label>WKWebView</label>
@@ -60,17 +36,6 @@
         </div>
     </div>
 
-    <div class="section">
-        <div class="pad-bottom">
-            <label>Shared Cookie:</label>
-            <input id="mycookie" value="foo" />
-        </div>
-
-        <div>
-            <label>A date/time picker</label>
-            <input type="datetime-local" />
-        </div>
-    </div>
 
     <div id="log"></div>
 </body>

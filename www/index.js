@@ -1,5 +1,5 @@
-//var IAB_PAGE_URL = "iab_content/iab.html";
-var IAB_PAGE_URL = "https://dpa99c.github.io/cordova-plugin-inappbrowser-test/iab_content/iab.html";
+var IAB_PAGE_URL = "iab_content/iab.html";
+// var IAB_PAGE_URL = "https://dpa99c.github.io/cordova-plugin-inappbrowser-test/iab_content/iab.html";
 
 var webView, osVersion, iab, targetWebview;
 
@@ -15,10 +15,6 @@ function error(msg){
 
 function openIAB(){
     var iabOpts = getIabOpts();
-    if($('#hideonopen input')[0].checked){
-        $('body').addClass("hidden");
-        iabOpts += ",hidden=yes";
-    }
 
     var logmsg = "Opening IAB";
     if(device.platform === "iOS"){
@@ -40,7 +36,6 @@ function openIAB(){
     iab.addEventListener('loadstop', function(e) {
         log("received 'loadstop' event");
         console.log("received 'loadstop' event for: " + e.url);
-        onIABLoaded();
     });
     iab.addEventListener('loaderror', function(e) {
         log("received 'loaderror' event");
@@ -49,49 +44,22 @@ function openIAB(){
     });
     iab.addEventListener('exit', function () {
         log("received 'exit' event");
-        readMyCookie();
     });
     iab.addEventListener('message', function (e) {
         log("received 'message' event");
         console.dir(e);
-        if(e.data.action === 'hide'){
-            hideIAB();
-        }
-    });
-    iab.addEventListener('beforeload', function (e, cb) {
-        log("received 'beforeload' event");
-        console.log("received 'beforeload' event for: " + e.url);
-        if($('#abort-on-beforeload')[0].checked){
-            log("aborted on beforeload");
-            console.warn("aborted on beforeload: "+e.url);
-            iab.close();
-        }else{
-            cb(e.url);
+        if(e.data.action === 'camera'){
+            openCamera();
         }
     });
 }
 
-function onIABLoaded() {
-
-}
-
-
-function hideIAB(){
-    $('body').addClass("hidden");
-    iab.hide();
-    readMyCookie();
-}
-
-function showIAB(){
-    $('body').removeClass("hidden");
-    iab.show();
-    iab.executeScript({
-        code: "readMyCookie();"
+function openCamera() {
+    navigator.camera.getPicture(function(){
+        log("successfully opened camera");
+    }, function(cameraError){
+        error("error opening camera: "+cameraError);
     });
-}
-
-function onChangeBeforeLoad(){
-    $('#abort-on-beforeload').attr('disabled', !$('#beforeload').val());
 }
 
 
@@ -106,9 +74,6 @@ function getIabOpts(){
 
     } else {
         iabOpts = 'location=yes';
-    }
-    if($('#beforeload').val()){
-        iabOpts += ',beforeload='+$('#beforeload').val();
     }
     return iabOpts;
 }
@@ -135,12 +100,6 @@ function onDeviceReady(){
     $('#platform').html(device.platform + " " + device.version);
     $('#webview').html(webView);
     $('body').addClass(device.platform.toLowerCase());
-
-    setMyCookie();
-    document.getElementById('mycookie').addEventListener('change', setMyCookie);
-    document.getElementById('beforeload').addEventListener('change', onChangeBeforeLoad);
-    onChangeBeforeLoad();
 }
-
 
 $(document).on('deviceready', onDeviceReady);

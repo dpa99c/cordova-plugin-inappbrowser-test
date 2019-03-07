@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="iab.css" type="text/css" />
         <link rel="stylesheet" href="common.css" type="text/css" />
         <script type="text/javascript" src="iab.js"></script>
-        <script type="text/javascript" src="common.js"></script>
     </head>
     <body>
         <h1>InappBrowser Content</h1>
@@ -17,37 +16,7 @@
         </div>
 
         <div class="section">
-            <div class="pad-bottom">
-                <label>Shared Cookie:</label>
-                <input id="mycookie" />
-            </div>
-
-            <div>
-                <label>localstorage:</label>
-                <input id="localstorage" />
-            </div>
-        </div>
-
-        <div class="section">
-            <button onclick="hide()">Hide</button>
-            <button onclick="showAlert()">Alert</button>
-            <button onclick="showConfirm()">Confirm</button>
-            <button onclick="showPrompt()">Prompt</button>
-            <button onclick="onClickPostMessage()">Post Message</button>
-        </div>
-
-        <div class="section">
-            <p>Form POST</p>
-            <form method="post" action="https://www.hashemian.com/tools/form-post-tester.php/test123">
-                <select name="Color" class="pad-bottom">
-                    <option value="Red">Red</option>
-                    <option value="Green">Green</option>
-                    <option value="Blue">Blue</option>
-                </select>
-                <input type="submit" value="Submit"/>
-            </form>
-
-            <p><a href="https://www.google.com">GET link</a></p>
+            <button onclick="openCamera()">Open Camera</button>
         </div>
     </body>
 </html>

@@ -40,6 +40,7 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-plugin-wkwebview-engine" spec="^1.1.4" />
     <plugin name="cordova-plugin-inappbrowser" spec="https://github.com/apache/cordova-plugin-inappbrowser" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <engine name="ios" spec="latest" />
     <engine name="android" spec="latest" />
 </widget>

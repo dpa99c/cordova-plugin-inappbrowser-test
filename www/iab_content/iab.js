@@ -26,9 +26,9 @@ function showPlatformDetails(){
     document.getElementById('webview').innerHTML = webView;
 }
 
-function onClickPostMessage(){
+function openCamera(){
     postMessage({
-        action: "logout"
+        action: "camera"
     });
 }
 
@@ -37,25 +37,9 @@ function postMessage(message){
     webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
 }
 
-function setLocalStorage(){
-    localStorage.setItem('mykey', document.getElementById('localstorage').value);
-}
-
-function getLocalStorage(){
-    document.getElementById('localstorage').value = localStorage.getItem('mykey');
-}
-
-function hide(){
-    postMessage("hide");
-}
-
 function onReady(){
     console.log("ready");
-    document.getElementById('mycookie').addEventListener('change', setMyCookie);
-    document.getElementById('localstorage').addEventListener('change', setLocalStorage);
     showPlatformDetails();
-    readMyCookie();
-    getLocalStorage();
 }
 
 

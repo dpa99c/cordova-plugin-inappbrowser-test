@@ -46,7 +46,9 @@ function getLocalStorage(){
 }
 
 function hide(){
-    postMessage("hide");
+    postMessage({
+        action: "hide"
+    });
 }
 
 function onReady(){

@@ -1,3 +1,14 @@
 .section button{
     margin-bottom: 12px;
 }
+
+#absolute-bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to right, red, blue);
+    opacity: 0.3;
+    border: 2px solid green;
+}

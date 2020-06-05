@@ -19,61 +19,22 @@
 </head>
 
 <body>
-    <h2>InappBrowser Test App</h2>
+    <h2>Themeable-PopupBridge Test App</h2>
 
-    <div class="section">
-        <p>Platform: <span id="platform"></span></p>
-        <p>App Webview: <span id="webview"></span></p>
+    <div class="pad-bottom">
+        <label>Options:</label>
+        <select id="options">
+            <option value="generic" selected="selected">Generic<option>
+            <option value="stationMenu">Station menu</option>
+        </select>
     </div>
 
     <div class="section">
-        <button id="open" class="pad-bottom" onclick="openIAB()">Open InappBrowser</button>
-        <button id="show" class="pad-bottom" onclick="showIAB()">Show IAB</button>
-
-        <div id="hideonopen" class="pad-bottom">
-            <label>Hide on open</label>
-            <input type="checkbox" />
-        </div>
-
-
-
-        <div class="pad-bottom">
-            <label>Use beforeload:</label>
-            <select id="beforeload">
-                <option value="" selected="selected">No</option>
-                <option value="yes">Yes</option>
-                <option value="get">GET</option>
-                <option value="post">POST</option>
-            </select>
-        </div>
-
-        <div class="pad-bottom">
-            <label>Abort on beforeload:</label>
-            <input type="checkbox" id="abort-on-beforeload" />
-        </div>
-
-        <div class="ios-implementation ios-only">
-            <label>WKWebView</label>
-            <input type="radio" name="webview" value="wkwebview" checked="checked"  />
-            <label>UIWebView</label>
-            <input type="radio" name="webview" value="uiwebview" />
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="pad-bottom">
-            <label>Shared Cookie:</label>
-            <input id="mycookie" value="foo" />
-        </div>
-
-        <div>
-            <label>A date/time picker</label>
-            <input type="datetime-local" />
-        </div>
+        <button id="open" class="pad-bottom" onclick="openPopupBridge()">Open PopupBridge</button>
+        <button id="show" class="pad-bottom" onclick="openThemable()">Open Themeable</button>
     </div>
 
     <div id="log"></div>
 
-    <div id="absolute-bottom"></div>
 </body>
 </html>

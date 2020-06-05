@@ -1,7 +1,85 @@
-//var IAB_PAGE_URL = "iab_content/iab.html";
 var IAB_PAGE_URL = "https://dpa99c.github.io/cordova-plugin-inappbrowser-test/iab_content/iab.html";
 
-var webView, osVersion, iab, targetWebview;
+var toc = "WMR";
+var tocSettings = {
+    SR: {
+        "brandcolour": "#0e3271",
+        "statusbarcolour": "#001E4F"
+    },
+    WMR: {
+        "brandcolour": "#3C1053",
+        "statusbarcolour": "#ffffff"
+    }
+};
+var settings = tocSettings[toc];
+
+var popupBridgeOptions = "location=no,toolbar=no,disallowoverscroll=yes,zoom=no,transitionstyle=crossdissolve,shouldPauseOnSuspend=yes";
+
+var iabOptions = {};
+function createIabOptions(isIos){
+    iabOptions.stationMenu = {
+        statusbar: {
+            color: settings.statusbarcolour
+        },
+        toolbar: {
+            height: 73,
+            color: settings.brandcolour,
+            paddingX: isIos ? 10 : 20
+        },
+        title: {
+            color: '#ffffff',
+            showPageTitle: true,
+            fontSize: 24
+        },
+        closeButton: {
+            wwwImage: 'icon/cross.png',
+            wwwImageDensity: 12,
+            imagePressed: 'close_pressed',
+            align: 'right',
+            event: 'closePressed'
+        },
+        fullscreen: isIos,
+        backButtonCanClose: true
+    };
+    iabOptions.generic = {
+        statusbar: {
+            color: settings.statusbarcolour
+        },
+        toolbar: {
+            height: 73,
+            color: settings.brandcolour
+        },
+        title: {
+            color: '#ffffff',
+            showPageTitle: true
+        },
+        closeButton: {
+                wwwImage: 'icon/cross.png',
+            wwwImageDensity: 8,
+            imagePressed: 'close_pressed',
+            align: 'left',
+            event: 'closePressed'
+        },
+        menu: {
+            wwwImage: 'icon/vertical-ellipsis-with-padding.png',
+            wwwImageDensity: 6,
+            title: 'Options',
+            cancel: 'Cancel',
+            align: 'right',
+            items: [
+                {
+                    event: 'btnOpenBrowserPressed',
+                    label: 'Open in Browser'
+                }
+            ]
+        },
+        fullscreen: isIos,
+        backButtonCanClose: true
+    };
+}
+
+
+var webView, osVersion, iabRef;
 
 function log(msg, className){
     className = className || '';
@@ -13,134 +91,67 @@ function error(msg){
     log(msg, "error");
 }
 
-function openIAB(){
-    var iabOpts = getIabOpts();
-    if($('#hideonopen input')[0].checked){
-        $('body').addClass("hidden");
-        iabOpts += ",hidden=yes";
+function openIAB(iab, opts){
+    if(!opts){
+        var optsName = $('#options').val();
+        opts = iabOptions[optsName];
     }
-
     var logmsg = "Opening IAB";
-    if(device.platform === "iOS"){
-        if(targetWebview === "wkwebview"){
-            logmsg += " using WKWebView";
-        }else{
-            logmsg += " using UIWebView";
-        }
-    }
-    logmsg += " with opts: "+iabOpts;
+    logmsg += " with"+(optsName ? " "+optsName : '')+" opts: "+(typeof opts === 'object' ? JSON.stringify(opts): opts);
     log(logmsg);
 
-    iab = cordova.InAppBrowser.open(IAB_PAGE_URL, '_blank', iabOpts);
+    iabRef = iab.open(IAB_PAGE_URL, '_blank', opts);
 
-    iab.addEventListener('loadstart', function(e) {
+    iabRef.addEventListener('loadstart', function(e) {
         log("received 'loadstart' event");
         console.log("received 'loadstart' event for: " + e.url);
     });
-    iab.addEventListener('loadstop', function(e) {
+    iabRef.addEventListener('loadstop', function(e) {
         log("received 'loadstop' event");
         console.log("received 'loadstop' event for: " + e.url);
-        onIABLoaded();
     });
-    iab.addEventListener('loaderror', function(e) {
+    iabRef.addEventListener('loaderror', function(e) {
         log("received 'loaderror' event");
         error("loaderror: " + e.message);
         console.error("received 'loaderror' event for: " + e.url);
     });
-    iab.addEventListener('exit', function () {
+    iabRef.addEventListener('exit', function () {
         log("received 'exit' event");
-        readMyCookie();
     });
-    iab.addEventListener('message', function (e) {
+    iabRef.addEventListener('message', function (e) {
         log("received 'message' event");
         console.dir(e);
-        if(e.data.action === 'hide'){
-            hideIAB();
-        }
     });
-    iab.addEventListener('beforeload', function (e, cb) {
-        log("received 'beforeload' event");
-        console.log("received 'beforeload' event for: " + e.url);
-        if($('#abort-on-beforeload')[0].checked){
-            log("aborted on beforeload");
-            console.warn("aborted on beforeload: "+e.url);
-            iab.close();
-        }else{
-            cb(e.url);
-        }
+    iabRef.addEventListener('btnOpenBrowserPressed', function(event) {
+        OpenInSystemBrowser(event.url.replace("borderless=true", ""));
     });
 }
 
-function onIABLoaded() {
-
+function openPopupBridge(){
+    log("open PopupBridge IAB");
+    openIAB(cordova.InAppBrowser, popupBridgeOptions);
 }
 
-
-function hideIAB(){
-    $('body').addClass("hidden");
-    iab.hide();
-    readMyCookie();
+function openThemable(){
+    log("open Themeable IAB");
+    openIAB(cordova.ThemeableBrowser);
 }
 
-function showIAB(){
-    $('body').removeClass("hidden");
-    iab.show();
-    iab.executeScript({
-        code: "readMyCookie();"
-    });
-}
-
-function onChangeBeforeLoad(){
-    $('#abort-on-beforeload').attr('disabled', !$('#beforeload').val());
-}
-
-
-function getIabOpts(){
-    var iabOpts;
-    if (device.platform === "iOS") {
-        iabOpts = 'location=no,toolbar=yes';
-        targetWebview = $('input[name=webview]:checked').val();
-        if(targetWebview === "wkwebview"){
-            iabOpts += ',usewkwebview=yes';
-        }
-
-    } else {
-        iabOpts = 'location=yes';
-    }
-    if($('#beforeload').val()){
-        iabOpts += ',beforeload='+$('#beforeload').val();
-    }
-    return iabOpts;
-}
 
 function onDeviceReady(){
     console.log("deviceready");
 
     osVersion = parseFloat(device.version);
 
-    if( device.platform === "iOS" ) {
-        if(window.webkit && window.webkit.messageHandlers ) {
-            webView = "WKWebView" ;
-        }else{
-            webView = "UIWebView" ;
-        }
-    }else{
-        if(navigator.userAgent.toLowerCase().indexOf('crosswalk') > -1) {
-            webView = "Crosswalk" ;
-        } else {
-            webView = "System" ;
-        }
-    }
+    var isIos = device.platform === "iOS";
+    createIabOptions(isIos);
 
-    $('#platform').html(device.platform + " " + device.version);
-    $('#webview').html(webView);
     $('body').addClass(device.platform.toLowerCase());
 
-    setMyCookie();
-    document.getElementById('mycookie').addEventListener('change', setMyCookie);
-    document.getElementById('beforeload').addEventListener('change', onChangeBeforeLoad);
-    onChangeBeforeLoad();
 }
 
+function OpenInSystemBrowser(url) {
+    window.open(url, '_system');
+}
 
 $(document).on('deviceready', onDeviceReady);

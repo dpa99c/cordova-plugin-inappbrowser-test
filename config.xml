@@ -22,6 +22,7 @@
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="android-minSdkVersion" value="19" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

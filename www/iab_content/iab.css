@@ -1,3 +1,12 @@
+body{
+    background-color: lightgreen;
+    
+    /* Safe area for iPhone X family */
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-top);
+}
 .section button{
     margin-bottom: 12px;
 }

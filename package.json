@@ -1,7 +1,7 @@
 {
     "name": "io.cordova.inappbrowser.test",
     "displayName": "InAppBrowser Test",
-    "version": "1.0.0",
+    "version": "4.0.0",
     "description": "",
     "author": "Dave Alden",
     "license": "MIT",
@@ -15,7 +15,7 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {},
-            "cordova-plugin-device": {}
+            "cordova-plugin-device": {},
             "cordova-plugin-inappbrowser": {}
         },
         "platforms": [

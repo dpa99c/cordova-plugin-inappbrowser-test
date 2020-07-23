@@ -21,13 +21,6 @@ function openIAB(){
     }
 
     var logmsg = "Opening IAB";
-    if(device.platform === "iOS"){
-        if(targetWebview === "wkwebview"){
-            logmsg += " using WKWebView";
-        }else{
-            logmsg += " using UIWebView";
-        }
-    }
     logmsg += " with opts: "+iabOpts;
     log(logmsg);
 
@@ -99,10 +92,6 @@ function getIabOpts(){
     var iabOpts;
     if (device.platform === "iOS") {
         iabOpts = 'location=no,toolbar=yes';
-        targetWebview = $('input[name=webview]:checked').val();
-        if(targetWebview === "wkwebview"){
-            iabOpts += ',usewkwebview=yes';
-        }
 
     } else {
         iabOpts = 'location=yes';

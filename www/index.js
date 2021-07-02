@@ -1,5 +1,5 @@
-//var IAB_PAGE_URL = "iab_content/iab.html";
-var IAB_PAGE_URL = "https://dpa99c.github.io/cordova-plugin-inappbrowser-test/iab_content/iab.html";
+var IAB_PAGE_URL = "iab_content/iab.html";
+// var IAB_PAGE_URL = "https://dpa99c.github.io/cordova-plugin-inappbrowser-test/iab_content/iab.html";
 
 var webView, osVersion, iab, targetWebview;
 

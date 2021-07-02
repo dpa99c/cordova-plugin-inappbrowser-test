@@ -18,9 +18,9 @@
     },
     "devDependencies": {
         "cordova-android": "^9.1.0",
-        "cordova-ios": "^6.1.0",
-        "cordova-plugin-device": "^1.1.6",
-        "cordova-plugin-inappbrowser": "latest",
-        "cordova-plugin-whitelist": "^1.3.2"
+        "cordova-ios": "*",
+        "cordova-plugin-device": "*",
+        "cordova-plugin-inappbrowser": "*",
+        "cordova-plugin-whitelist": "*"
     }
 }

@@ -103,7 +103,7 @@ function getIabOpts(){
 }
 
 function onDeviceReady(){
-    console.log("deviceready");
+    log("deviceready");
 
     osVersion = parseFloat(device.version);
 
@@ -125,6 +125,10 @@ function onDeviceReady(){
     $('#platform-version').html(cordova.platformVersion);
     $('#webview').html(webView);
     $('body').addClass(device.platform.toLowerCase());
+
+    log("Device platform: " + device.platform + " " + device.version);
+    log("Platform version: " + cordova.platformVersion);
+    log("Webview: " + webView);
 
     setMyCookie();
     document.getElementById('mycookie').addEventListener('change', setMyCookie);

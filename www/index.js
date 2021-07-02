@@ -28,17 +28,17 @@ function openIAB(){
 
     iab.addEventListener('loadstart', function(e) {
         log("received 'loadstart' event");
-        console.log("received 'loadstart' event for: " + e.url);
+        console.log("received 'loadstart' event for '" + e.url + ": "+JSON.stringify(e));
     });
     iab.addEventListener('loadstop', function(e) {
         log("received 'loadstop' event");
-        console.log("received 'loadstop' event for: " + e.url);
+        console.log("received 'loadstop' event for '" + e.url + ": "+JSON.stringify(e));
         onIABLoaded();
     });
     iab.addEventListener('loaderror', function(e) {
         log("received 'loaderror' event");
         error("loaderror: " + e.message);
-        console.error("received 'loaderror' event for: " + e.url);
+        console.error("received 'loaderror' event for '" + e.url + ": "+JSON.stringify(e));
     });
     iab.addEventListener('exit', function () {
         log("received 'exit' event");
@@ -122,6 +122,7 @@ function onDeviceReady(){
     }
 
     $('#platform').html(device.platform + " " + device.version);
+    $('#platform-version').html(cordova.platformVersion);
     $('#webview').html(webView);
     $('body').addClass(device.platform.toLowerCase());
 
